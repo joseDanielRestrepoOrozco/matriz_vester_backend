@@ -1,34 +1,26 @@
 import express from 'express'
 import cors from 'cors'
-import config from './utils/config.js'
-import mongoose from 'mongoose'
-import userRouter from './controllers/users.js'
-import middleware from './utils/middleware.js'
-import loginRouter from './controllers/login.js'
+import { connectDB } from './db.js'
+import cookieParser from 'cookie-parser'
+
+import authRoutes from './routes/auth.routes.js'
+
+import tokenExtractor from './middlewares/tokenExtractor.js'
+import unknownEndpoint from './middlewares/unknownEndpoint.js'
+import errorHandler from './middlewares/errorHandler.js'
 
 const app = express()
 
-mongoose.set('strictQuery', false)
-
-mongoose
-  .connect(config.MONGODB_URI, {
-    dbName: config.DB_NAME
-  })
-  .then(() => {
-    console.log('Connected to MongoDB')
-  })
-  .catch(error => {
-    console.error('Error connecting to MongoDB:', error.message)
-  })
+connectDB()
 
 app.use(cors())
 app.use(express.json())
-app.use(middleware.tokenExtractor)
+app.use(cookieParser())
+app.use(tokenExtractor)
 
-app.use('/api/users', userRouter)
-app.use('/api/login', loginRouter)
+app.use('/api/auth', authRoutes)
 
-app.use(middleware.unknownEndpoint)
-app.use(middleware.errorHandler)
+app.use(unknownEndpoint)
+app.use(errorHandler)
 
 export default app

@@ -7,9 +7,16 @@ const schema = new mongoose.Schema({
     minlength: true,
     unique: true
   },
-  name: String,
-  passwordHash: String
-})
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  passwordHash: {
+    type: String,
+    required: true
+  }
+}, { timestamps: true })
 
 schema.set('toJSON', {
   transform: (document, returnedObject) => {
