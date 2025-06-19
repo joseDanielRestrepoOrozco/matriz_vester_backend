@@ -4,7 +4,6 @@ const schema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    minlength: true,
     unique: true
   },
   email: {
@@ -16,7 +15,7 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   }
-}, { timestamps: true })
+})
 
 schema.set('toJSON', {
   transform: (document, returnedObject) => {

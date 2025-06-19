@@ -2,7 +2,6 @@ import express from 'express'
 import cors from 'cors'
 import { connectDB } from './db.js'
 import cookieParser from 'cookie-parser'
-
 import authRoutes from './routes/auth.routes.js'
 
 import tokenExtractor from './middlewares/tokenExtractor.js'
@@ -13,7 +12,7 @@ const app = express()
 
 connectDB()
 
-app.use(cors())
+app.use(cors({ credentials: true, origin: true }))
 app.use(express.json())
 app.use(cookieParser())
 app.use(tokenExtractor)
