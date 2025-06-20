@@ -5,7 +5,7 @@ export const createAccessToken = (payload) => {
   return new Promise((resolve, reject) => {
     jwt.sign(payload,
       config.SECRET,
-      { expiresIn: '1d' },
+      { expiresIn: '7d' },
       (err, token) => {
         if (err) reject(err)
         resolve(token)
