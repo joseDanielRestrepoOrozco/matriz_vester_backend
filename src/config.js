@@ -12,4 +12,6 @@ const MONGODB_URI = process.env.MONGODB_URI
 
 const SECRET = process.env.SECRET
 
-export default { DB_NAME, MONGODB_URI, PORT, SECRET }
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
+
+export default { DB_NAME, MONGODB_URI, PORT, SECRET, FRONTEND_URL }

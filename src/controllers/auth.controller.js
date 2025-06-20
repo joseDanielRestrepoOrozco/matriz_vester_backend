@@ -5,6 +5,10 @@ import { createAccessToken } from '../libs/jwt.js'
 export const register = async (req, res, next) => {
   const { username, email, password } = req.body
 
+  if (password.length < 6) {
+    return res.status(400).json({ error: 'password must be at least 6 characters long' })
+  }
+
   try {
     const passwordHash = await bcrypt.hash(password, 10)
 
