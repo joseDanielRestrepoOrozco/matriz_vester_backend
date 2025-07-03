@@ -14,6 +14,17 @@ const schema = new mongoose.Schema({
   passwordHash: {
     type: String,
     required: true
+  },
+  verificationCode: {
+    type: String,
+  },
+  verificationCodeExpires: {
+    type: Date,
+  },
+  status: {
+    type: String,
+    enum: ['ACTIVE', 'PENDING', 'INACTIVE'],
+    default: 'PENDING',
   }
 })
 

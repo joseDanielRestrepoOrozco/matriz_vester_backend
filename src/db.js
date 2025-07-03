@@ -10,7 +10,6 @@ export const connectDB = async () => {
     logger.info('Connected to MongoDB')
   } catch (error) {
     logger.error('Error connecting to MongoDB:', error.message)
-
     process.exit(1)
   }
 }

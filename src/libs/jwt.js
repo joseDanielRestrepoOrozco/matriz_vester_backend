@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken'
 import config from '../config.js'
 
-export const createAccessToken = (payload) => {
+export const createAccessToken = (payload, options = {}) => {
   return new Promise((resolve, reject) => {
-    jwt.sign(payload,
+    jwt.sign(
+      payload,
       config.SECRET,
-      { expiresIn: '7d' },
+      { expiresIn: options.expiresIn || '7d', ...options },
       (err, token) => {
         if (err) reject(err)
         resolve(token)
