@@ -14,4 +14,10 @@ const SECRET = process.env.SECRET
 
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
 
-export default { DB_NAME, MONGODB_URI, PORT, SECRET, FRONTEND_URL }
+const EMAIL_SERVICE = process.env.EMAIL_SERVICE
+
+const EMAIL_USER = process.env.EMAIL_USER
+
+const EMAIL_PASS = process.env.EMAIL_PASS
+
+export default { DB_NAME, MONGODB_URI, PORT, SECRET, FRONTEND_URL, EMAIL_SERVICE, EMAIL_USER, EMAIL_PASS }
