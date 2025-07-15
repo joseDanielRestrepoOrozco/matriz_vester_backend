@@ -16,15 +16,15 @@ const schema = new mongoose.Schema({
     required: true
   },
   verificationCode: {
-    type: String,
+    type: String
   },
   verificationCodeExpires: {
-    type: Date,
+    type: Date
   },
   status: {
     type: String,
     enum: ['ACTIVE', 'PENDING', 'INACTIVE'],
-    default: 'PENDING',
+    default: 'PENDING'
   }
 })
 

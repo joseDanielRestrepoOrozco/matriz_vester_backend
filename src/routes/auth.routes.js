@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { register, login, logout, verifyToken, verifyCode, secondFactorAuthentication, resetPassword, changeResetPassword } from '../controllers/auth.controller.js'
-import { registerSchema, loginSchema } from '../schemas/auth.schema.js'
+import { registerSchema, loginSchema, verifyCodeSchema, verifyEmailSchema } from '../schemas/auth.schema.js'
 import validateSchema from '../middlewares/validator.middleware.js'
 
 const router = Router()
@@ -13,12 +13,12 @@ router.post('/logout', logout)
 
 router.get('/verify', verifyToken)
 
-router.post('/verifyCode', verifyCode)
+router.post('/verifyCode', validateSchema(verifyCodeSchema), verifyCode)
 
-router.post('/secondFactorAuthentication', secondFactorAuthentication)
+router.post('/secondFactorAuthentication', validateSchema(verifyCodeSchema), secondFactorAuthentication)
 
-router.post('/resetPassword', resetPassword)
+router.post('/resetPassword', validateSchema(verifyEmailSchema), resetPassword)
 
-router.put('/changeResetPassword', changeResetPassword)
+router.put('/changeResetPassword', validateSchema(), changeResetPassword)
 
 export default router
