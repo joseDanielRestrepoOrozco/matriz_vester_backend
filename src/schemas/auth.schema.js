@@ -1,21 +1,13 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
-const passwordSchema = z.string({
-  error: (issue) => {
-    if (issue.input === undefined) return 'Password is required'
-    if (issue.code === 'too_small') return 'Password must be at least 8 characters long'
-    if (issue.code === 'too_big') return 'Password must be at most 20 characters long'
-  }
-})
+const passwordSchema = z.string()
   .trim()
   .min(8, { error: 'Password must be at least 8 characters long' })
   .max(20, { error: 'Password must be at most 20 characters long' })
   .refine((val) => /[0-9]/.test(val), { error: 'Password must include a number' })
   .refine((val) => /[^A-Za-z0-9]/.test(val), { error: 'Password must include a special character' })
 
-const emailSchema = z.string({
-  error: () => 'Email is required'
-}).trim().email({
+const emailSchema = z.email({
   error: 'Invalid email format'
 })
 

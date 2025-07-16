@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 const errorHandler = (error, request, response, next) => {
   if (error.name === 'CastError') {
@@ -19,7 +19,7 @@ const errorHandler = (error, request, response, next) => {
       error: 'token expired'
     })
   } else if (error instanceof z.ZodError) {
-    return response.status(400).json({ error: error.errors.map(err => err.message) })
+    return response.status(400).json({ error: error.issues.map(err => err.message) })
   }
 
   next(error)

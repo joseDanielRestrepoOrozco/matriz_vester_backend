@@ -36,30 +36,30 @@ export const login = async (req, res, next) => {
   const { email, password } = req.body
 
   try {
-    const userFound = await User.findOne({ email })
+    const user = await User.findOne({ email })
 
-    const validPassword = userFound
-      ? await bcrypt.compare(password, userFound.passwordHash)
+    const validPassword = user
+      ? await bcrypt.compare(password, user.passwordHash)
       : false
 
     if (!validPassword) {
       return res.status(400).json({ message: 'user or password incorrect' })
     }
 
-    if (userFound.status !== 'ACTIVE') {
+    if (user.status !== 'ACTIVE') {
       return res.status(403).json({ message: 'Account not verified' })
     }
 
     // Generar código y expiración
     const newCode = await generateVerificationCode()
     const expirationTime = new Date(Date.now() + 15 * 60 * 1000)
-    userFound.verificationCode = newCode
-    userFound.verificationCodeExpires = expirationTime
-    await userFound.save()
+    user.verificationCode = newCode
+    user.verificationCodeExpires = expirationTime
+    await user.save()
     // Solo email
-    const emailSent = await sendEmail(email, newCode, userFound.username, 'authentication')
+    const emailSent = await sendEmail(email, newCode, user.username, 'authentication')
     if (emailSent) {
-      return res.status(200).json({ message: 'Check the code sent to your email' })
+      return res.status(200).json(user)
     } else {
       return res.status(500).json({ message: 'Error sending email' })
     }

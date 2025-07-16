@@ -35,6 +35,9 @@ schema.set('toJSON', {
     delete returnedObject.__v
 
     delete returnedObject.passwordHash
+    delete returnedObject.verificationCode
+    delete returnedObject.verificationCodeExpires
+    delete returnedObject.status
   }
 })
 
