@@ -73,17 +73,20 @@ export const logout = (req, res) => {
 }
 
 export const verifyToken = async (req, res, next) => {
-  const token = req.token
+  const token = req.body.token
 
   try {
     if (!token) return res.status(401).end()
     const decodedUser = jwt.verify(token, config.SECRET)
-    const userFound = await User.findById(decodedUser.id)
+    const user = await User.findById(decodedUser.id)
 
-    if (!userFound) {
+    if (!user) {
       return res.status(401).json({ error: 'Unauthorized' })
     }
-    res.status(200).json(userFound)
+
+    const newToken = await createAccessToken({ id: user._id })
+
+    res.status(200).json({ user, token: newToken })
   } catch (error) {
     next(error)
   }

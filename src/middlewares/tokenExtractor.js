@@ -1,8 +1,8 @@
 const tokenExtractor = (req, res, next) => {
-  const token = req.cookies.token
+  const authorization = req.get('Authorization')
 
-  if (token) {
-    req.token = token
+  if (authorization && authorization.startsWith('Bearer ')) {
+    req.token = authorization.replace('Bearer ', '')
   }
 
   next()

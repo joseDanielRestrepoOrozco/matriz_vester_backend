@@ -11,7 +11,7 @@ router.post('/login', validateSchema(loginSchema), login)
 
 router.post('/logout', logout)
 
-router.get('/verify', verifyToken)
+router.post('/verify', verifyToken)
 
 router.post('/verifyCode', validateSchema(verifyCodeSchema), verifyCode)
 
