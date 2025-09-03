@@ -146,7 +146,7 @@ export const secondFactorAuthentication = async (req, res) => {
     // Generar token de autenticación solo con la id
     const token = await createAccessToken({ id: user._id })
     res.status(200).json({
-      message: 'Login successfull',
+      message: 'sesion iniciada correctamente',
       token
     })
   } catch (error) {
